@@ -10,6 +10,11 @@ namespace PizzaShopping.Data
                 return;
             }
 
+            if (context.Products.Any())
+            {
+                return;
+            }
+
             List<Category> categories = new List<Category>
                 {
                     new Category { CategoryName = "Meat", Description = "For meat eaters" },
