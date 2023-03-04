@@ -1,0 +1,56 @@
+﻿@page
+@using PizzaShopping.Models;
+@model PizzaShopping.Pages.Customers.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Customer customer = new Customer();
+}
+
+<h1>Index</h1>
+
+@await Html.PartialAsync("_CreatePartial", customer)
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Customers[0].Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customers[0].ContactName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customers[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customers[0].Phone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Customers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @await Html.PartialAsync("_EditPartial", item)
+                    <a class="btn btn-secondary" role="button" asp-page="./Details" asp-route-id="@item.CustomerId">Details</a>
+                    <a class="btn btn-danger" role="button" asp-page="./Delete" asp-route-id="@item.CustomerId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -8,8 +8,7 @@ namespace PizzaShopping.Models
     {
         [Key]
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
 
         [Required]
         public string Username { get; set; }

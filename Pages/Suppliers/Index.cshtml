@@ -1,0 +1,53 @@
+﻿@page
+@model PizzaShopping.Pages.Suppliers.IndexModel
+@using PizzaShopping.Models;
+
+@{
+    ViewData["Title"] = "Index";
+    Supplier supplier = new Supplier();
+}
+
+<h1>Index</h1>
+
+@*Load Create Modal*@
+@await Html.PartialAsync("_CreatePartial", supplier)
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Suppliers[0].CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suppliers[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suppliers[0].Phone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Suppliers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+
+                    @await Html.PartialAsync("_EditPartial", item)
+
+                    <a class="btn btn-secondary" role="button" asp-page="./Details" asp-route-id="@item.SupplierId">Details</a>
+                    <a class="btn btn-danger" role="button" asp-page="./Delete" asp-route-id="@item.SupplierId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,66 @@
+﻿@page
+@using PizzaShopping.Models;
+@model PizzaShopping.Pages.Products.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Product product = new Product();
+}
+
+<h1>Index</h1>
+@await Html.PartialAsync("_CreatePartial", product)
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].QuantityPerUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Supplier)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityPerUnit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    <img width="100" height="100" style="background-position: center center" src="@item.ProductImage" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.CompanyName)
+                </td>
+                <td>
+                    @await Html.PartialAsync("_EditPartial", item)
+                    <a class="btn btn-secondary" role="button" asp-page="./Details" asp-route-id="@item.ProductId">Details</a>
+                    <a class="btn btn-danger" role="button" asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

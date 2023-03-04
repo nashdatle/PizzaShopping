@@ -14,7 +14,7 @@ namespace PizzaShopping.Models
         public int OrderId { get; set; }
 
         [Required]
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
         [Required]
         public DateTime OrderDate { get; set; }

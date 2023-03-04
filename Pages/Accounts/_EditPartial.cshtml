@@ -1,0 +1,55 @@
+﻿@using PizzaShopping.Models.Enum;
+@model PizzaShopping.Models.Account;
+
+@{
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal-@Model.AccountId">
+        Edit
+    </button>
+
+    <div class="modal fade" id="editModal-@Model.AccountId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Supplier #@Model.AccountId</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+                        <input name="Action" type="hidden" value="EDIT" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="@Model.AccountId" />
+                        <div class="form-group">
+                            <label asp-for="@Model.Username" class="control-label"></label>
+                            <input asp-for="@Model.Username" class="form-control" />
+                            <span asp-validation-for="@Model.Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Password" class="control-label"></label>
+                            <input asp-for="@Model.Password" class="form-control" />
+                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.FullName" class="control-label"></label>
+                            <input asp-for="@Model.FullName" class="form-control" />
+                            <span asp-validation-for="@Model.FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Type" class="control-label"></label>
+                            <select asp-for="@Model.Type" asp-items="Html.GetEnumSelectList<AccountType>()" class="form-control"></select>
+                            <span asp-validation-for="@Model.Type" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,50 @@
+﻿@page
+@using PizzaShopping.Models;
+@model PizzaShopping.Pages.Accounts.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Account account = new Account();
+}
+
+<h1>Index</h1>
+
+@await Html.PartialAsync("_CreatePartial", account)
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Accounts[0].Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accounts[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accounts[0].Type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Accounts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @await Html.PartialAsync("_EditPartial", item)
+                    <a class="btn btn-secondary" role="button" asp-page="./Details" asp-route-id="@item.AccountId">Details</a>
+                    <a class="btn btn-danger" role="button" asp-page="./Delete" asp-route-id="@item.AccountId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

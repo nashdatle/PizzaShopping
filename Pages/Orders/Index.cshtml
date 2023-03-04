@@ -1,0 +1,68 @@
+﻿@page
+@using PizzaShopping.Models;
+@model PizzaShopping.Pages.Orders.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Order order = new Order();
+}
+
+<h1>Index</h1>
+
+@await Html.PartialAsync("_CreatePartial", order)
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].RequiredDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].ShippedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].Freight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].ShipAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].Customer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequiredDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShippedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Freight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Address)
+                </td>
+                <td>
+                    @await Html.PartialAsync("_EditPartial", item)
+                    <a class="btn btn-secondary" role="button" asp-page="./Details" asp-route-id="@item.OrderId">Details</a>
+                    <a class="btn btn-danger" role="button" asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
