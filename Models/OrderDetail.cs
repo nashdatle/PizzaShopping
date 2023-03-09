@@ -8,7 +8,7 @@ namespace PizzaShopping.Models
     public class OrderDetail
     {
         [Required]
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
 
         [Required]
         public int ProductId { get; set; }

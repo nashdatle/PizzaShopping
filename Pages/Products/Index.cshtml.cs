@@ -25,8 +25,14 @@ namespace PizzaShopping.Pages.Products
         [BindProperty]
         public Product Product { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            int type = HttpContext.Session.GetInt32("ROLE") == null ? -1 : (int)HttpContext.Session.GetInt32("ROLE");
+            if (type != 1)
+            {
+                return Unauthorized();
+            }
+
             if (_context.Products != null)
             {
                 Products = await _context.Products
@@ -36,11 +42,19 @@ namespace PizzaShopping.Pages.Products
 
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
             ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName");
+            return Page();
+
         }
 
         // POST
         public async Task<IActionResult> OnPostAsync()
         {
+            int type = HttpContext.Session.GetInt32("ROLE") == null ? -1 : (int)HttpContext.Session.GetInt32("ROLE");
+            if (type != 1)
+            {
+                return Unauthorized();
+            }
+
             string action = Request.Form["Action"];
             if (action == "CREATE")
             {

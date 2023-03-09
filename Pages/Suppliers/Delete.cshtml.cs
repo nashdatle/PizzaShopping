@@ -24,6 +24,12 @@ namespace PizzaShopping.Pages.Suppliers
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            int type = HttpContext.Session.GetInt32("ROLE") == null ? -1 : (int)HttpContext.Session.GetInt32("ROLE");
+            if (type != 1)
+            {
+                return Unauthorized();
+            }
+
             if (id == null || _context.Suppliers == null)
             {
                 return NotFound();
@@ -44,6 +50,11 @@ namespace PizzaShopping.Pages.Suppliers
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
+            int type = HttpContext.Session.GetInt32("ROLE") == null ? -1 : (int)HttpContext.Session.GetInt32("ROLE");
+            if (type != 1)
+            {
+                return Unauthorized();
+            }
             if (id == null || _context.Suppliers == null)
             {
                 return NotFound();

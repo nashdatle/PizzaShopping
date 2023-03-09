@@ -12,17 +12,23 @@ namespace PizzaShopping.Pages.Orders
 {
     public class DetailsModel : PageModel
     {
-        private readonly PizzaShopping.Data.PizzaContext _context;
+        private readonly PizzaContext _context;
 
-        public DetailsModel(PizzaShopping.Data.PizzaContext context)
+        public DetailsModel(PizzaContext context)
         {
             _context = context;
         }
 
       public Order Order { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
+            int type = HttpContext.Session.GetInt32("ROLE") == null ? -1 : (int)HttpContext.Session.GetInt32("ROLE");
+            if (type != 1)
+            {
+                return Unauthorized();
+            }
+
             if (id == null || _context.Orders == null)
             {
                 return NotFound();

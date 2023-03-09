@@ -22,8 +22,14 @@ namespace PizzaShopping.Pages.Orders
         [BindProperty]
       public Order Order { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
+            int type = HttpContext.Session.GetInt32("ROLE") == null ? -1 : (int)HttpContext.Session.GetInt32("ROLE");
+            if (type != 1)
+            {
+                return Unauthorized();
+            }
+
             if (id == null || _context.Orders == null)
             {
                 return NotFound();
@@ -44,6 +50,12 @@ namespace PizzaShopping.Pages.Orders
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
+            int type = HttpContext.Session.GetInt32("ROLE") == null ? -1 : (int)HttpContext.Session.GetInt32("ROLE");
+            if (type != 1)
+            {
+                return Unauthorized();
+            }
+
             if (id == null || _context.Orders == null)
             {
                 return NotFound();

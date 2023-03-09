@@ -11,7 +11,7 @@ namespace PizzaShopping.Models
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
 
         [Required]
         public Guid CustomerId { get; set; }

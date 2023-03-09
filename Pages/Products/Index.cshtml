@@ -56,7 +56,7 @@
                     @Html.DisplayFor(modelItem => item.Supplier.CompanyName)
                 </td>
                 <td>
-                    @await Html.PartialAsync("_EditPartial", item)
+                    @*await Html.PartialAsync("_EditPartial", item)*@
                     <a class="btn btn-secondary" role="button" asp-page="./Details" asp-route-id="@item.ProductId">Details</a>
                     <a class="btn btn-danger" role="button" asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
                 </td>

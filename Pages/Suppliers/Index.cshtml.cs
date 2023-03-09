@@ -25,17 +25,30 @@ namespace PizzaShopping.Pages.Suppliers
         public Supplier Supplier { get; set; }
 
         // GET
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            int type = HttpContext.Session.GetInt32("ROLE") == null ? -1 : (int)HttpContext.Session.GetInt32("ROLE");
+            if (type != 1)
+            {
+                return Unauthorized();
+            }
+
             if (_context.Suppliers != null)
             {
                 Suppliers = await _context.Suppliers.ToListAsync();
             }
+            return Page();
         }
 
         // POST
         public async Task<IActionResult> OnPostAsync()
         {
+            int type = HttpContext.Session.GetInt32("ROLE") == null ? -1 : (int)HttpContext.Session.GetInt32("ROLE");
+            if (type != 1)
+            {
+                return Unauthorized();
+            }
+
             string action = Request.Form["Action"];
             if (action == "CREATE")
             {

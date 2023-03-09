@@ -12,8 +12,8 @@ using PizzaShopping.Data;
 namespace PizzaShopping.Migrations
 {
     [DbContext(typeof(PizzaContext))]
-    [Migration("20230303181008_PizzaShoppingMigration")]
-    partial class PizzaShoppingMigration
+    [Migration("20230308170002_PizzaMigration")]
+    partial class PizzaMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,11 +99,9 @@ namespace PizzaShopping.Migrations
 
             modelBuilder.Entity("PizzaShopping.Models.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<Guid>("OrderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
@@ -133,8 +131,8 @@ namespace PizzaShopping.Migrations
 
             modelBuilder.Entity("PizzaShopping.Models.OrderDetail", b =>
                 {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");

@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    List<OrderDetail>? details = ViewData["Details"] as List<OrderDetail>;
     Order order = new Order();
 }
 
@@ -58,10 +59,20 @@
                     @Html.DisplayFor(modelItem => item.Customer.Address)
                 </td>
                 <td>
-                    @await Html.PartialAsync("_EditPartial", item)
+                    @*await Html.PartialAsync("_EditPartial", item)*@
                     <a class="btn btn-secondary" role="button" asp-page="./Details" asp-route-id="@item.OrderId">Details</a>
                     <a class="btn btn-danger" role="button" asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
                 </td>
+            </tr>
+            <tr>
+                @{
+                    List<OrderDetail> specificDetail = details.Where(d => d.OrderId == item.OrderId).ToList();
+                    foreach (OrderDetail o in specificDetail)
+                    {
+                        <td></td>
+                        <td colspan="5" class="table-active">@o.Product.ProductName</td>
+                    }
+                }
             </tr>
         }
     </tbody>

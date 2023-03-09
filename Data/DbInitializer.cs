@@ -1,4 +1,5 @@
-﻿using PizzaShopping.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PizzaShopping.Models;
 using PizzaShopping.Models.Enum;
 
 namespace PizzaShopping.Data
@@ -37,12 +38,84 @@ namespace PizzaShopping.Data
             {
                 List<Product> products = new List<Product>
                 {
-                    new Product {ProductName="Peperoni", SupplierId = 1, CategoryId = 1, QuantityPerUnit = 1, UnitPrice = 1, ProductImage= "https://foodhub.scene7.com/is/image/woolworthsltdprod/2004-easy-pepperoni-pizza:Mobile-1300x1150"},
-                    new Product {ProductName="Vegan", SupplierId = 1, CategoryId = 1, QuantityPerUnit = 1, UnitPrice = 1, ProductImage= "https://biancazapatka.com/wp-content/uploads/2020/05/quinoa-pizza-mit-spargel.jpg" },
+                    new Product {ProductName="Peperoni", SupplierId = 1, CategoryId = 1, QuantityPerUnit = 100, UnitPrice = 10.99, ProductImage= "https://foodhub.scene7.com/is/image/woolworthsltdprod/2004-easy-pepperoni-pizza:Mobile-1300x1150"},
+                    new Product {ProductName="Vegan", SupplierId = 1, CategoryId = 1, QuantityPerUnit = 100, UnitPrice = 7.5, ProductImage= "https://biancazapatka.com/wp-content/uploads/2020/05/quinoa-pizza-mit-spargel.jpg" },
                 };
                 context.Products.AddRange(products);
                 context.SaveChanges();
             }
+
+            if (!context.Accounts.Any())
+            {
+                List<Account> accounts = new List<Account>
+                {
+                    new Account { FullName = "Le Minh Dung", Password = "123456", Username = "dungminhle", Type = AccountType.Staff},
+                    new Account { FullName = "Le Thanh Dat", Password = "123456", Username = "nashdatle", Type = AccountType.Staff}
+                };
+                context.Accounts.AddRange(accounts);
+                context.SaveChanges();
+            }
+
+            Customer customer = new Customer
+            {
+                CustomerId = Guid.NewGuid(),
+                ContactName= "Test",
+                Address = "Hanoi",
+                Password = "Password",
+                Phone= "1234567890"
+            };
+
+            if (!context.Customers.Any())
+            {
+                List<Customer> customers = new List<Customer>
+                {
+                    customer
+                };
+                context.Customers.AddRange(customers);
+                context.SaveChanges();
+            }
+
+            Order order = new Order
+            {
+                OrderId = Guid.NewGuid(),
+                CustomerId = customer.CustomerId,
+                OrderDate = DateTime.Now,
+                RequiredDate = DateTime.Now,
+                ShippedDate = null,
+                Freight = 100.0,
+                ShipAddress = "Ha Noi"
+            };
+
+            if (!context.Orders.Any())
+            {
+                List<Order> orders = new List<Order>
+                {
+                    order
+                };
+                context.Orders.AddRange(orders);
+                context.SaveChanges();
+            }
+
+            //if (!context.OrderDetails.Any())
+            //{
+            //    List<OrderDetail> orderDetails = new List<OrderDetail>
+            //    {
+            //        new OrderDetail{
+            //            OrderId = order.OrderId,
+            //            ProductId = 1,
+            //            Quantity = 1,
+            //            UnitPrice = 1
+            //        },
+            //        new OrderDetail{
+            //            OrderId = order.OrderId,
+            //            ProductId = 2,
+            //            Quantity = 1,
+            //            UnitPrice = 1
+            //        },
+            //    };
+            //    context.OrderDetails.AddRange(orderDetails);
+            //    context.SaveChanges();
+            //}
 
             if (!context.Accounts.Any())
             {
