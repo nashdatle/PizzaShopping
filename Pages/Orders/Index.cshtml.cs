@@ -42,7 +42,6 @@ namespace PizzaShopping.Pages.Orders
             }
             ViewData["Products"] = _context.Products.ToList();
             _context.Products.ToList();
-            ViewData["Details"] = _context.OrderDetails.ToList();
             return Page();
         }
 
@@ -51,10 +50,6 @@ namespace PizzaShopping.Pages.Orders
             string action = Request.Form["Action"];
             if (action == "CREATE")
             {
-                List<Product> products = await _context.Products.ToListAsync();
-
-                List<OrderDetail> orderDetails = new List<OrderDetail>();
-
                 var order = new Order
                 {
                     OrderId = Guid.NewGuid(),
@@ -65,29 +60,8 @@ namespace PizzaShopping.Pages.Orders
                     Freight = Order.Freight,
                     ShipAddress = Order.ShipAddress
                 };
-
-                foreach (Product product in products)
-                {
-                    string indexString = Request.Form["orderdetail-" + product.ProductId.ToString()];
-                    int index = Convert.ToInt32(indexString);
-                    if (index != 0)
-                    {
-                        orderDetails.Add(new OrderDetail
-                        {
-                            OrderId = order.OrderId,
-                            ProductId = product.ProductId,
-                            Quantity = index,
-                            UnitPrice= product.UnitPrice,
-                        });
-                    }
-                }
-
-                if (orderDetails.Count > 0)
-                {
                     await _context.Orders.AddAsync(order);
-                    await _context.OrderDetails.AddRangeAsync(orderDetails);
                     await _context.SaveChangesAsync();
-                }
             }
             return Page();
         }

@@ -96,26 +96,6 @@ namespace PizzaShopping.Data
                 context.SaveChanges();
             }
 
-            //if (!context.OrderDetails.Any())
-            //{
-            //    List<OrderDetail> orderDetails = new List<OrderDetail>
-            //    {
-            //        new OrderDetail{
-            //            OrderId = order.OrderId,
-            //            ProductId = 1,
-            //            Quantity = 1,
-            //            UnitPrice = 1
-            //        },
-            //        new OrderDetail{
-            //            OrderId = order.OrderId,
-            //            ProductId = 2,
-            //            Quantity = 1,
-            //            UnitPrice = 1
-            //        },
-            //    };
-            //    context.OrderDetails.AddRange(orderDetails);
-            //    context.SaveChanges();
-            //}
 
             if (!context.Accounts.Any())
             {
